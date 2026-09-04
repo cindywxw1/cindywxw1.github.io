@@ -1,0 +1,401 @@
+/* =========================================================================
+   Cindy Wang — portfolio styles
+   15-113 Project 1
+
+   AI USAGE NOTE: drafted with Claude, then adjusted by me. The structure is:
+   1. theme variables   2. base elements   3. header   4. hero
+   5. sections          6. experience      7. projects  8. skills  9. footer
+
+   The whole page is black and white. Everything is drawn from two colors,
+   --paper (background) and --ink (text). Greys are mixed from those two at
+   run time with color-mix(), so I never hard-code a grey and the greys stay
+   correct in both themes.
+   ========================================================================= */
+
+/* ---------- 1. Theme variables ---------- */
+:root {
+  --paper: #ffffff;
+  --ink: #000000;
+  /* The "alt" pair is the opposite of the current theme. The reversed panels
+     and the invert button both work by pulling from these. */
+  --paper-alt: #000000;
+  --ink-alt: #ffffff;
+
+  --mute: color-mix(in srgb, var(--ink) 52%, var(--paper));
+  --rule: color-mix(in srgb, var(--ink) 16%, var(--paper));
+
+  --measure: 66ch;      /* line length cap: long lines are hard to read */
+  --pad: clamp(1.25rem, 5vw, 5rem);
+  --header-h: 4rem;
+}
+
+[data-theme="dark"] {
+  --paper: #000000;
+  --ink: #ffffff;
+  --paper-alt: #ffffff;
+  --ink-alt: #000000;
+  --mute: color-mix(in srgb, var(--ink) 58%, var(--paper));
+  --rule: color-mix(in srgb, var(--ink) 24%, var(--paper));
+}
+
+/* Any section marked .reversed flips the two colors for itself and everything
+   inside it, which is where the page gets its rhythm without using color. */
+.reversed {
+  --paper: var(--paper-alt);
+  --ink: var(--ink-alt);
+  --mute: color-mix(in srgb, var(--ink) 55%, var(--paper));
+  --rule: color-mix(in srgb, var(--ink) 26%, var(--paper));
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* ---------- 2. Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;          /* the "smooth scrolling" feature, no JS needed */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.075rem);
+  line-height: 1.55;
+  font-synthesis-weight: none;
+}
+
+h1, h2, h3 { margin: 0; line-height: 1.1; font-weight: 700; }
+p { margin: 0 0 1em; max-width: var(--measure); }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+a:hover { text-decoration-thickness: 2px; }
+
+/* Keyboard users need to see where they are. */
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 10;
+  background: var(--ink); color: var(--paper); padding: 0.75rem 1rem;
+}
+.skip-link:focus { left: 0; }
+
+/* ---------- 3. Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; gap: 1.5rem;
+  min-height: var(--header-h);
+  padding: 0 var(--pad);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  font-weight: 700;
+  font-variation-settings: "wdth" 108;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav {
+  display: flex; gap: 1.25rem;
+  margin-left: auto;
+  overflow-x: auto;                 /* narrow phones scroll the nav instead of breaking */
+  scrollbar-width: none;
+}
+.site-nav::-webkit-scrollbar { display: none; }
+
+.site-nav a {
+  font-size: 0.94rem;
+  color: var(--mute);
+  text-decoration: none;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+.site-nav a:hover { color: var(--ink); }
+
+/* script.js adds aria-current="true" to whichever link matches the section
+   currently on screen; the underline is driven off that attribute. */
+.site-nav a[aria-current="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.theme-toggle {
+  font: inherit; font-size: 0.86rem;
+  background: none; color: var(--ink);
+  border: 1px solid var(--rule);
+  padding: 0.35rem 0.8rem; cursor: pointer;
+}
+.theme-toggle:hover { border-color: var(--ink); }
+
+/* ---------- 4. Hero ---------- */
+.hero {
+  position: relative;
+  padding: clamp(3rem, 9vw, 7rem) var(--pad) clamp(3rem, 7vw, 5rem);
+  overflow: hidden;
+}
+
+/* Perfboard dot grid, faded out downward. It is decoration, so it sits in a
+   pseudo-element and is hidden from screen readers automatically. */
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, var(--rule) 1.1px, transparent 1.2px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 72%);
+          mask-image: linear-gradient(to bottom, #000 0%, transparent 72%);
+  pointer-events: none;
+}
+
+.hero > * { position: relative; }
+
+.display {
+  font-size: clamp(4rem, 17vw, 12.5rem);
+  font-weight: 800;
+  font-variation-settings: "wdth" 120;   /* the wide setting is the whole idea */
+  letter-spacing: -0.035em;
+  line-height: 0.85;
+  margin-bottom: 0.35em;
+}
+
+.waveform {
+  display: block;
+  width: 100%; height: 34px;
+  color: var(--ink);
+  margin-bottom: 2rem;
+}
+
+.lede {
+  font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem);
+  max-width: 56ch;
+  margin-bottom: 2rem;
+}
+
+.contact-row { display: flex; flex-wrap: wrap; gap: 0.6rem 1.75rem; }
+.contact-row a { color: var(--mute); }
+.contact-row a:hover { color: var(--ink); }
+.contact-row--large { font-size: clamp(1.05rem, 1rem + 0.6vw, 1.5rem); }
+.contact-row--large a { color: var(--ink); }
+
+/* ---------- 5. Sections ---------- */
+.section {
+  padding: clamp(3.5rem, 8vw, 6.5rem) var(--pad);
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: var(--header-h);   /* stops the sticky header covering headings */
+}
+.reversed { border-top-color: transparent; }
+
+.section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-variation-settings: "wdth" 100;
+  letter-spacing: 0.02em;
+  color: var(--mute);
+  margin-bottom: 2.5rem;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.portrait {
+  width: 100%; aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(1);              /* keeps a color photo on-palette */
+}
+
+.portrait--empty {
+  display: grid; place-items: center;
+  border: 1px solid var(--rule);
+  color: var(--mute);
+  font-size: 0.9rem;
+  background-image: radial-gradient(circle, var(--rule) 1.1px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+.facts { margin: 1.75rem 0 0; }
+.facts dt {
+  font-size: 0.82rem; color: var(--mute);
+  margin-top: 1rem;
+}
+.facts dd { margin: 0.15rem 0 0; }
+
+.prose p:last-child { margin-bottom: 0; }
+
+/* ---------- 6. Experience trace ---------- */
+.trace { display: grid; gap: 3rem; }
+
+.trace-item {
+  display: grid;
+  grid-template-columns: 12rem minmax(0, 1fr);
+  gap: 0 2.5rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+/* The vertical line plus a square node: a signal running down the page. */
+.trace-item::before {
+  content: "";
+  position: absolute; left: 0; top: 0.55em; bottom: -3rem;
+  border-left: 1px solid var(--rule);
+}
+.trace-item:last-child::before { bottom: auto; height: 0; }
+
+.trace-item::after {
+  content: "";
+  position: absolute; left: -3px; top: calc(0.55em - 3px);
+  width: 7px; height: 7px;
+  background: var(--ink);
+}
+
+.trace-when {
+  color: var(--mute);
+  font-size: 0.9rem;
+  margin: 0.2em 0 0;
+}
+
+.trace-item h3 {
+  font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.6rem);
+  font-variation-settings: "wdth" 104;
+  margin-bottom: 0.7rem;
+}
+
+/* ---------- 7. Projects ---------- */
+.filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+
+.filter {
+  font: inherit; font-size: 0.9rem;
+  background: none; color: var(--mute);
+  border: 1px solid var(--rule);
+  padding: 0.4rem 0.9rem; cursor: pointer;
+}
+.filter:hover { color: var(--ink); border-color: var(--ink); }
+
+.filter.is-active {
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+}
+
+.filter-status { font-size: 0.85rem; color: var(--mute); min-height: 1.5em; }
+
+.projects { display: grid; gap: 3.5rem; margin-top: 1.5rem; }
+
+.project {
+  display: grid;
+  grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 3rem);
+  align-items: start;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--rule);
+}
+
+.project h3 {
+  font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.6rem);
+  font-variation-settings: "wdth" 104;
+}
+
+.project-when { color: var(--mute); font-size: 0.9rem; margin: 0.4rem 0 0.9rem; }
+
+.shot {
+  width: 100%; aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+  border: 1px solid var(--rule);
+  filter: grayscale(1);
+}
+
+.shot--empty {
+  display: grid; place-items: center;
+  color: var(--mute); font-size: 0.85rem;
+  background-image: radial-gradient(circle, var(--rule) 1.1px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+.tags { color: var(--mute); font-size: 0.9rem; }
+.links { margin-bottom: 0; }
+
+/* JS adds this class to filtered-out projects rather than touching inline
+   styles, so the rule that hides them lives here with the rest of the CSS. */
+.project.is-hidden { display: none; }
+
+/* ---------- 8. Skills ---------- */
+.skills {
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr);
+  margin: 0;
+}
+.skills dt {
+  color: var(--mute);
+  padding: 1rem 0;
+  border-top: 1px solid var(--rule);
+}
+.skills dd {
+  margin: 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--rule);
+  max-width: var(--measure);
+}
+
+.contact-lede { font-size: clamp(1.05rem, 1rem + 0.4vw, 1.25rem); margin-bottom: 2rem; }
+
+/* ---------- 9. Footer ---------- */
+.site-footer {
+  padding: 2.5rem var(--pad);
+  border-top: 1px solid var(--rule);
+  color: var(--mute);
+  font-size: 0.85rem;
+}
+.site-footer p { max-width: var(--measure); margin: 0; }
+
+/* ---------- Responsive ----------
+   One breakpoint. Below it, every two-column grid becomes one column. */
+@media (max-width: 760px) {
+  .about-grid,
+  .project,
+  .skills { grid-template-columns: 1fr; }
+
+  .trace-item { grid-template-columns: 1fr; gap: 0.35rem; }
+  .trace-when { order: -1; margin-top: 0; }
+
+  .portrait { max-width: 16rem; }
+  .skills dd { border-top: 0; padding-top: 0; }
+  .skills dt { padding-bottom: 0.35rem; }
+  .display { font-size: clamp(3.5rem, 19vw, 6rem); }
+  .waveform { height: 24px; }
+}
+
+/* Respect people who ask their system to reduce motion. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}
+
+/* Print: black on white, drop the interface chrome. */
+@media print {
+  .site-header, .filters, .filter-status, .theme-toggle { display: none; }
+  .reversed { --paper: #fff; --ink: #000; }
+  body { font-size: 11pt; }
+}

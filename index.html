@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<!--
+  Cindy Wang — personal portfolio
+  15-113 Project 1
+
+  AI USAGE NOTE (required by the assignment):
+  The first draft of this file was generated with Claude (Anthropic) from my resume
+  and a description of the look I wanted: strictly black and white, typography-led,
+  with visual motifs borrowed from digital hardware (perfboard dot grid, clock
+  waveform, signal-trace timeline). I reviewed every section, cut what I didn't
+  want, and rewrote the copy. Full prompts and replies are in prompt-log.md.
+  TODO (Cindy): add your own notes here about what you changed and why.
+-->
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cindy Wang — Electrical &amp; Computer Engineering, CMU</title>
+<meta name="description" content="Cindy Wang is an electrical and computer engineering student at Carnegie Mellon working on FPGA digital design, embedded firmware, and custom hardware.">
+
+<!-- Archivo is a variable font: one family, but the width axis (wdth) lets the
+     display type stretch wide while body text stays at a normal width. That's
+     why the page only loads one typeface. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <a class="wordmark" href="#top">Cindy Wang</a>
+
+  <nav class="site-nav" aria-label="Sections">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- The toggle swaps two CSS variables (--paper and --ink). See script.js. -->
+  <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">
+    <span aria-hidden="true">Invert</span>
+    <span class="sr-only">Switch to dark theme</span>
+  </button>
+</header>
+
+<main id="main">
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="top">
+    <h1 class="display">Cindy<br>Wang</h1>
+
+    <!-- A clock signal, drawn as a plain SVG path. It stretches to the width of
+         the page because preserveAspectRatio is off and the stroke is set not to
+         scale, so the vertical edges stay crisp at any screen size. -->
+    <svg class="waveform" viewBox="0 0 1200 34" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path d="M0 26 H90 V8 H210 V26 H280 V8 H430 V26 H530 V8 H620 V26 H770 V8 H840 V26 H980 V8 H1080 V26 H1200"
+            fill="none" stroke="currentColor" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+    </svg>
+
+    <p class="lede">
+      I work at the line where software meets silicon: RTL on FPGAs, firmware on
+      microcontrollers, and the boards underneath both. Electrical and computer
+      engineering at Carnegie Mellon, class of 2028.
+    </p>
+
+    <ul class="contact-row">
+      <li><a href="mailto:xinwanw@andrew.cmu.edu">xinwanw@andrew.cmu.edu</a></li>
+      <li><a href="https://github.com/cindywxw1">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/cindy-wang-130092384/">LinkedIn</a></li>
+    </ul>
+  </section>
+
+  <!-- ===== About ===== -->
+  <section class="section" id="about">
+    <h2 class="section-title">About</h2>
+
+    <div class="about-grid">
+      <div>
+        <!-- PHOTO PLACEHOLDER
+             To use a real photo: save it as images/cindy.jpg, then replace this
+             whole <div> with:
+             <img class="portrait" src="images/cindy.jpg" alt="Cindy Wang">
+        -->
+        <div class="portrait portrait--empty">Photo</div>
+
+        <dl class="facts">
+          <dt>Degree</dt>
+          <dd>B.S. Electrical &amp; Computer Engineering, minor in Robotics</dd>
+          <dt>School</dt>
+          <dd>Carnegie Mellon University, May 2028</dd>
+          <dt>GPA</dt>
+          <dd>3.91 / 4.0</dd>
+          <dt>Honors</dt>
+          <dd>TartanHacks Grand Prize 2026; Dean's List, Fall 2024 – Spring 2026</dd>
+        </dl>
+      </div>
+
+      <div class="prose">
+        <p>
+          I like problems where the answer has to survive contact with real
+          hardware. Most of what I build starts on a bench: a scope probe on a
+          test point, a logic analyzer catching an edge that arrives 30
+          milliseconds too late, a board I laid out myself that needs one more
+          rework wire before it behaves.
+        </p>
+        <p>
+          At the Manufacturing Futures Institute I build sensor nodes that listen
+          to industrial machines and tell you when they are about to fail. In my
+          own time I am writing a pipelined limit order book in SystemVerilog,
+          which has turned into a long argument with the timing report. I also
+          teach: this fall I take over as head TA for 15-122, running a team of
+          more than forty TAs.
+        </p>
+        <p>
+          Outside of coursework I am on Carnegie Mellon Racing's perception
+          hardware, and I spend Build18 week making things that have no business
+          existing, like a record player built from scratch.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Experience ===== -->
+  <section class="section" id="experience">
+    <h2 class="section-title">Experience</h2>
+
+    <!-- Laid out as a trace with square nodes. Numbered or connected markers
+         only make sense when the content really is a sequence; this is, since
+         it runs in time. -->
+    <ol class="trace">
+      <li class="trace-item">
+        <p class="trace-when">Jul 2025 — present</p>
+        <div>
+          <h3>Research Student, CMU Manufacturing Futures Institute</h3>
+          <p>
+            Working with Prof. Gary Fedder on an IoT predictive maintenance
+            system for industrial equipment. I designed and bench-tested a custom
+            Altium board that fans an ESP32-C6 out to acceleration, acoustic and
+            environmental sensors over I2C and I2S, then wrote the embedded
+            pipeline that runs FFT analysis on-device and streams results over
+            MQTT to the institute's data backbone.
+          </p>
+          <p>
+            I also benchmark commercial tactile sensors — XELA, Touchlab,
+            Contactile, Sensible — in ROS1 and ROS2, comparing SNR, spatial
+            resolution and sensitivity so the lab can pick one for a human-robot
+            interaction study.
+          </p>
+        </div>
+      </li>
+
+      <li class="trace-item">
+        <p class="trace-when">Aug 2025 — present</p>
+        <div>
+          <h3>Head Teaching Assistant, 15-122 Principles of Imperative Computation</h3>
+          <p>
+            Promoted to head TA for Fall 2026, where I coordinate a team of 40+
+            TAs: splitting workload, reviewing performance and keeping the
+            teaching staff talking to each other. Before that I ran weekly
+            recitations for 30+ students, held office hours for a course of 200+,
+            and led grading — rewriting rubrics and making the final calls on
+            borderline work.
+          </p>
+        </div>
+      </li>
+
+      <li class="trace-item">
+        <p class="trace-when">Jul 2025 — May 2026</p>
+        <div>
+          <h3>Perception Hardware, Carnegie Mellon Racing</h3>
+          <p>
+            Wrote STM32 firmware to hardware-trigger the LiDAR and cameras
+            together, closing a frame timing gap of 30+ ms down to under a
+            millisecond and replacing the team's motion-modeling workaround with
+            direct hardware sync.
+          </p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===== Projects (reversed panel: the --paper and --ink variables swap) ===== -->
+  <section class="section reversed" id="projects">
+    <h2 class="section-title">Projects</h2>
+
+    <!-- Filter buttons. Each project carries a data-tags attribute; the script
+         compares the clicked filter against that list and hides the rest. -->
+    <div class="filters" role="group" aria-label="Filter projects by area">
+      <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+      <button class="filter" type="button" data-filter="fpga" aria-pressed="false">FPGA</button>
+      <button class="filter" type="button" data-filter="embedded" aria-pressed="false">Embedded</button>
+      <button class="filter" type="button" data-filter="analog" aria-pressed="false">PCB &amp; analog</button>
+      <button class="filter" type="button" data-filter="web" aria-pressed="false">Web</button>
+    </div>
+
+    <p class="filter-status" id="filter-status" role="status"></p>
+
+    <div class="projects" id="project-list">
+
+      <article class="project" data-tags="fpga">
+        <!-- SCREENSHOT PLACEHOLDER — replace with:
+             <img class="shot" src="images/order-book.png" alt="Waveform view of the order book pipeline in simulation"> -->
+        <div class="shot shot--empty">images/order-book.png</div>
+        <div>
+          <h3>High-frequency order book feed handler</h3>
+          <p class="project-when">Jun 2026 — present</p>
+          <p>
+            A six-stage pipelined limit order book in SystemVerilog, targeting
+            250 MHz with one message retired per cycle. Book storage lives in
+            BRAM with 16 price levels per side; because the read is synchronous I
+            could not scan for the best bid and ask combinationally, so the top
+            of book is tracked in its own pipeline stage to close timing.
+          </p>
+          <p class="tags">SystemVerilog · Vivado · VCS</p>
+          <p class="links"><a href="https://github.com/cindywxw1">Code</a></p>
+        </div>
+      </article>
+
+      <article class="project" data-tags="fpga">
+        <div class="shot shot--empty">images/magic-square.png</div>
+        <div>
+          <h3>FPGA digital system design and verification</h3>
+          <p class="project-when">Spring 2026</p>
+          <p>
+            Hierarchical SystemVerilog circuits — a magic square validator and a
+            character decoder — built by unit-testing each submodule before
+            integration. I minimized the combinational logic with K-maps, then
+            compared NAND against NOR implementations by reading LUT utilization
+            out of Vivado synthesis, and deployed the result to a Boolean Board
+            for hardware verification.
+          </p>
+          <p class="tags">SystemVerilog · Vivado · Boolean Board</p>
+          <p class="links"><a href="https://github.com/cindywxw1">Code</a></p>
+        </div>
+      </article>
+
+      <article class="project" data-tags="embedded">
+        <div class="shot shot--empty">images/lidar-sync.png</div>
+        <div>
+          <h3>LiDAR and camera hardware triggering</h3>
+          <p class="project-when">Jul 2025 — May 2026</p>
+          <p>
+            Cone detection on the racing team was suffering because the LiDAR and
+            the cameras saw the world at different moments. I bench-tested
+            clock-sync and semi-sync strategies on a logic analyzer, then moved
+            the team to a direct hardware trigger from an STM32, which cut the
+            gap from over 30 ms to under one.
+          </p>
+          <p class="tags">STM32 · C · Logic analyzer · ROS2</p>
+          <p class="links"><a href="https://github.com/cindywxw1">Code</a></p>
+        </div>
+      </article>
+
+      <article class="project" data-tags="analog embedded">
+        <div class="shot shot--empty">images/record-player.png</div>
+        <div>
+          <h3>Analog vinyl record player with DJ set</h3>
+          <p class="project-when">Build18, Jan 2026</p>
+          <p>
+            A record player built from the platter up in a week. The signal chain
+            is a custom pre-amplifier at 100× gain with live bass and treble
+            control; the pre-amp and power distribution boards are my layouts,
+            hand-soldered SMD. PID firmware holds the platter at speed, and the
+            enclosure is laser-cut acrylic on mounting rings modeled in
+            SolidWorks.
+          </p>
+          <p class="tags">Altium · SMD soldering · PID control · SolidWorks</p>
+          <p class="links"><a href="https://github.com/cindywxw1">Code</a></p>
+        </div>
+      </article>
+
+      <article class="project" data-tags="embedded">
+        <div class="shot shot--empty">images/sensor-node.png</div>
+        <div>
+          <h3>IoT predictive maintenance sensor node</h3>
+          <p class="project-when">Jul 2025 — present</p>
+          <p>
+            A multi-sensor board for listening to factory equipment: acceleration,
+            acoustics and environment into an ESP32-C6, FFT on the device, results
+            published over MQTT for campus-wide streaming. Built at the
+            Manufacturing Futures Institute and validated on the bench and in
+            place.
+          </p>
+          <p class="tags">Altium · ESP32-C6 · I2C · I2S · MQTT</p>
+          <p class="links"><a href="https://github.com/cindywxw1">Code</a></p>
+        </div>
+      </article>
+
+      <article class="project" data-tags="web">
+        <div class="shot shot--empty">images/portfolio.png</div>
+        <div>
+          <h3>This website</h3>
+          <p class="project-when">Sep 2026</p>
+          <p>
+            My first site: hand-edited HTML and CSS, no framework, deployed on
+            GitHub Pages. The theme is two CSS variables that the invert button
+            swaps, the navigation highlights whichever section is on screen using
+            an IntersectionObserver, and the project filter above is plain
+            JavaScript over a data attribute. Drafted with Claude as part of
+            15-113 and rewritten from there.
+          </p>
+          <p class="tags">HTML · CSS · JavaScript · GitHub Pages</p>
+          <p class="links"><a href="https://github.com/cindywxw1">Code</a></p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===== Skills ===== -->
+  <section class="section" id="skills">
+    <h2 class="section-title">Skills</h2>
+
+    <dl class="skills">
+      <dt>Languages</dt>
+      <dd>SystemVerilog, Python, C, C++, MATLAB, SQL, Bash, Swift</dd>
+
+      <dt>Software</dt>
+      <dd>VS Code, Git, Vivado, VCS, PyTorch, MySQL, TiDB, NumPy, Tmux, Foxglove</dd>
+
+      <dt>Hardware</dt>
+      <dd>Altium Designer, Onshape, SolidWorks, STM32CubeIDE, Arduino</dd>
+
+      <dt>Robotics</dt>
+      <dd>ROS1, ROS2</dd>
+
+      <dt>Protocols</dt>
+      <dd>I2C, I2S, SPI, UART, CAN, Ethernet, MQTT</dd>
+
+      <dt>Bench</dt>
+      <dd>Oscilloscope, logic analyzer, signal generator, multimeter, SMD soldering</dd>
+
+      <dt>Coursework</dt>
+      <dd>Imperative Computation, Data Structures, Computer Systems, Signal Processing, Analog Circuit Design, FPGA, Logic Design and Verification, Computer Architecture (Spring 2027)</dd>
+    </dl>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section class="section reversed" id="contact">
+    <h2 class="section-title">Contact</h2>
+    <p class="contact-lede">
+      I'm looking for summer 2027 internships in digital design, embedded
+      systems, or hardware bring-up. Email is the fastest way to reach me.
+    </p>
+    <ul class="contact-row contact-row--large">
+      <li><a href="mailto:xinwanw@andrew.cmu.edu">xinwanw@andrew.cmu.edu</a></li>
+      <li><a href="https://github.com/cindywxw1">github.com/cindywxw1</a></li>
+      <li><a href="https://www.linkedin.com/in/cindy-wang-130092384/">LinkedIn</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>Built by Cindy Wang, 2026. Typeface: Archivo by Omnibus-Type, via Google Fonts (SIL Open Font License). First draft written with Claude for 15-113; see the prompt log in the repository.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
